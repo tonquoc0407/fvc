@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finnvnoi-api-check"
+version = "1.0.0"
+description = "Finnvnoi API usage checker with terminal and system-tray apps"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+tray = ["pystray>=0.19", "pillow>=9.0"]
+macos = ["rumps>=0.4"]
+build = ["pyinstaller>=6.0"]
+
+[project.scripts]
+fvc = "codex_usage.cli:main"
+
+[project.gui-scripts]
+fvc-tray = "codex_usage.cli:main"
+
+[tool.setuptools]
+packages = ["codex_usage"]

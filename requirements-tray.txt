@@ -1,0 +1,8 @@
+# Desktop front ends only. The terminal dashboard needs nothing beyond the standard library.
+
+# Windows and Linux: tray icon and panel
+pystray>=0.19
+pillow>=9.0
+
+# macOS: menu bar app
+rumps>=0.4; sys_platform == "darwin"

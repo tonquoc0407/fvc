@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Finnvnoi API Check" Manufacturer="Finnvnoi" Version="1.0.0.0"
+           UpgradeCode="{A77A8C13-B5AD-4D14-9B31-2D2D8AC8E8C3}">
+    <MajorUpgrade DowngradeErrorMessage="A newer version is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+    <Feature Id="Main" Title="Finnvnoi API Check" Level="1">
+      <ComponentGroupRef Id="AppFiles" />
+      <ComponentRef Id="StartMenuShortcut" />
+    </Feature>
+  </Package>
+  <Fragment>
+    <Directory Id="ProgramFilesFolder">
+      <Directory Id="INSTALLFOLDER" Name="Finnvnoi API Check" />
+    </Directory>
+    <Directory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="Finnvnoi API Check" />
+    </Directory>
+    <ComponentGroup Id="AppFiles" Directory="INSTALLFOLDER">
+      <Files Include="$(var.Payload)\**" />
+    </ComponentGroup>
+    <Component Id="StartMenuShortcut" Directory="ApplicationProgramsFolder">
+      <Shortcut Id="TrayShortcut" Name="Finnvnoi API Check" Target="[INSTALLFOLDER]FinnvnoiApiCheck.exe" />
+      <RemoveFolder Id="RemoveMenu" On="uninstall" />
+      <RegistryValue Root="HKCU" Key="Software\Finnvnoi\API Check" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+  </Fragment>
+</Wix>

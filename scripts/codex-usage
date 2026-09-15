@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Linux/macOS launcher: runs straight from source, no install step.
+set -euo pipefail
+cd "$(dirname "$(readlink -f "$0")")/.."
+exec python3 -m codex_usage "$@"
