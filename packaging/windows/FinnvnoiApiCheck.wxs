@@ -10,14 +10,16 @@
     </Feature>
   </Package>
   <Fragment>
-    <Directory Id="ProgramFilesFolder">
+    <StandardDirectory Id="ProgramFilesFolder">
       <Directory Id="INSTALLFOLDER" Name="Finnvnoi API Check" />
-    </Directory>
-    <Directory Id="ProgramMenuFolder">
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder">
       <Directory Id="ApplicationProgramsFolder" Name="Finnvnoi API Check" />
-    </Directory>
+    </StandardDirectory>
     <ComponentGroup Id="AppFiles" Directory="INSTALLFOLDER">
-      <Files Include="$(var.Payload)\**" />
+      <Component Id="TrayExecutable">
+        <File Id="FinnvnoiApiCheckExe" Source="$(var.Payload)\FinnvnoiApiCheck.exe" />
+      </Component>
     </ComponentGroup>
     <Component Id="StartMenuShortcut" Directory="ApplicationProgramsFolder">
       <Shortcut Id="TrayShortcut" Name="Finnvnoi API Check" Target="[INSTALLFOLDER]FinnvnoiApiCheck.exe" />
