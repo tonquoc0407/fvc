@@ -13,5 +13,6 @@ Copy-Item (Join-Path $Out "FinnvnoiApiCheck.exe") $Payload -Force
 if (-not (Get-Command wix -ErrorAction SilentlyContinue)) { throw "WiX v4 is required: dotnet tool install --global wix" }
 wix build (Join-Path $Root "packaging\windows\FinnvnoiApiCheck.wxs") `
   -d Payload="$Payload" -arch x64 -o (Join-Path $Out "FinnvnoiApiCheck-$Version.msi")
+if ($LASTEXITCODE -ne 0) { throw "WiX could not build the MSI." }
 Remove-Item $Payload -Recurse -Force
 Write-Host "Built $Out\FinnvnoiApiCheck-$Version.msi"

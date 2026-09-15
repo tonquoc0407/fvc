@@ -32,7 +32,7 @@ jobs:
           python-version: "3.13"
       - name: Install WiX
         shell: pwsh
-        run: dotnet tool install --global wix
+        run: dotnet tool install --global wix --version 4.0.5
       - name: Build MSI
         shell: pwsh
         run: .\scripts\build-windows-msi.ps1
