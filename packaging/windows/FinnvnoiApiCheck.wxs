@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Package Name="Finnvnoi API Check" Manufacturer="Finnvnoi" Version="1.0.0.0"
+  <Package Name="Finnvnoi API Check" Manufacturer="Finnvnoi" Version="1.0.2.0"
            UpgradeCode="{A77A8C13-B5AD-4D14-9B31-2D2D8AC8E8C3}">
     <MajorUpgrade DowngradeErrorMessage="A newer version is already installed." />
     <MediaTemplate EmbedCab="yes" />

@@ -49,12 +49,12 @@ class AlertWatcher:
         key = snap.active_label or "key"
         alerts: List[Alert] = []
         for limit in snap.usage.limits + snap.usage.upstream_limits:
-            alerts.extend(self._check_limit(key, limit))
+            alerts.extend(self._check_limit(key, limit, now))
         alerts.extend(self._check_expiry(key, snap, now))
         return alerts
 
     # -- limits --------------------------------------------------------
-    def _check_limit(self, key: str, limit: Limit) -> List[Alert]:
+    def _check_limit(self, key: str, limit: Limit, now: _dt.datetime) -> List[Alert]:
         ratio = limit.percent
         if ratio is None:
             return []
@@ -75,13 +75,13 @@ class AlertWatcher:
         for threshold in self.thresholds:
             if ratio >= threshold and threshold not in fired:
                 fired.add(threshold)
-                alerts = [self._limit_alert(key, limit, threshold, ratio)]  # keep only the highest
+                alerts = [self._limit_alert(key, limit, threshold, ratio, now)]  # keep only the highest
         return alerts
 
     @staticmethod
-    def _limit_alert(key: str, limit: Limit, threshold: float, ratio: float) -> Alert:
+    def _limit_alert(key: str, limit: Limit, threshold: float, ratio: float, now: Optional[_dt.datetime] = None) -> Alert:
         remaining = f"{limit_amount(limit.limit_type, limit.remaining_value)} left"
-        reset = f", resets {until(limit.reset_dt)}" if limit.reset_at else ""
+        reset = f", resets {until(limit.reset_dt, now)}" if limit.reset_at else ""
         return Alert(
             ident=f"{key}::{limit.label}::{threshold:.0f}",
             title=f"Finnvnoi API Check · {key}",

@@ -55,13 +55,20 @@ class Limit:
     @classmethod
     def parse(cls, raw: Dict[str, Any]) -> "Limit":
         raw = raw or {}
+        filter_val = raw.get("model_filter")
+        if isinstance(filter_val, list):
+            filter_str = ", ".join(str(x) for x in filter_val) if filter_val else None
+        elif filter_val not in (None, ""):
+            filter_str = str(filter_val)
+        else:
+            filter_str = None
         return cls(
             limit_type=_str(raw, "limit_type", default="") or "",
             limit_window=_str(raw, "limit_window", default="") or "",
             max_value=_int(raw, "max_value"),
             current_value=_int(raw, "current_value"),
             remaining_value=_int(raw, "remaining_value"),
-            model_filter=_str(raw, "model_filter"),
+            model_filter=filter_str,
             reset_at=_str(raw, "reset_at"),
             source=_str(raw, "source", default="api_key_limit") or "api_key_limit",
         )
@@ -79,7 +86,10 @@ class Limit:
         parts = [p for p in (self.limit_type, self.limit_window) if p]
         text = " / ".join(parts) if parts else "limit"
         if self.model_filter:
-            text += f" [{self.model_filter}]"
+            clean_filter = self.model_filter.strip()
+            if clean_filter.startswith("[") and clean_filter.endswith("]"):
+                clean_filter = clean_filter[1:-1].strip()
+            text += f" [{clean_filter}]"
         return text
 
 

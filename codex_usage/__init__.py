@@ -1,6 +1,6 @@
 """Finnvnoi API usage checker."""
 
-__version__ = "1.0.0"
+__version__ = "1.0.2"
 APP_NAME = "finnvnoi-api-check"
 DEFAULT_BASE_URL = "https://codex.finnvnoi.top"
 DEFAULT_POLL_INTERVAL = 10.0

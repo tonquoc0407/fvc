@@ -51,18 +51,18 @@ FINNVNOI_API_CONFIG_DIR
 Build on the target operating system:
 
 ```bash
-scripts/build-linux-deb.sh       # dist/fvc_1.0.0_all.deb
-scripts/build-macos-pkg.sh       # dist/FinnvnoiApiCheck-1.0.0.pkg (macOS)
+scripts/build-linux-deb.sh       # dist/finnvnoi-api-check_1.0.2_all.deb
+scripts/build-macos-pkg.sh       # dist/FinnvnoiApiCheck-1.0.2.pkg (macOS)
 ```
 
 ```powershell
-scripts\build-windows-msi.ps1   # dist\FinnvnoiApiCheck-1.0.0.msi (Windows; WiX v4 required)
+scripts\build-windows-msi.ps1   # dist\FinnvnoiApiCheck-1.0.2.msi (Windows; WiX v4 required)
 ```
 
 GitHub Actions builds all three packages automatically on pushes and pull requests.
-Push a tag such as `v1.0.0` to build and publish a GitHub Release:
+Push a tag such as `v1.0.2` to build and publish a GitHub Release:
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag v1.0.2
+git push origin v1.0.2
 ```

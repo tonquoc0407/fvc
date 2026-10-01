@@ -2,7 +2,7 @@
 # Build a Debian package for Finnvnoi API Check.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VERSION="${VERSION:-1.0.0}"
+VERSION="${VERSION:-1.0.2}"
 OUT="$ROOT/dist"
 PKG="$OUT/finnvnoi-api-check_${VERSION}_all"
 

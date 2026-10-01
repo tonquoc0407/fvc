@@ -466,15 +466,15 @@ class Dashboard:
         upstream = any(l.source != "api_key_limit" for l in limits)
         long_tag = inner >= 80
         tag_width = (10 if long_tag else 4) if upstream else 0
-        name_cap = 28 if inner >= 84 else (22 if inner >= 68 else 18)
+        name_cap = 34 if inner >= 96 else (26 if inner >= 74 else 20)
         name_width = min(name_cap, max(12, max(len(l.label) for l in limits) + 1))
-        show_amount = inner >= 82
-        show_reset = inner >= 64
         amount_width, reset_width = 20, 18
 
         fixed = name_width + tag_width + 8  # gap plus the percentage
+        show_amount = (inner - fixed - 5 >= amount_width)
         if show_amount:
             fixed += amount_width
+        show_reset = (inner - fixed - 5 >= reset_width)
         if show_reset:
             fixed += reset_width
         bar_width = max(5, min(26, inner - fixed))

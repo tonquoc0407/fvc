@@ -140,14 +140,35 @@ def set_active(label: str) -> bool:
     return True
 
 
+def _find_codex_endpoint_key() -> Optional[str]:
+    codex_home = os.environ.get("CODEX_HOME") or os.path.expanduser("~/.codex")
+    env_file = os.path.join(codex_home, "codex_custom_endpoint.env")
+    if os.path.isfile(env_file):
+        try:
+            with open(env_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line.startswith("export CODEX_API_KEY=") or line.startswith("CODEX_API_KEY="):
+                        val = line.split("=", 1)[1].strip().strip("'\"")
+                        if val:
+                            return val
+        except OSError:
+            pass
+    return None
+
+
 def resolve_keys(cli_key: Optional[str] = None) -> List[Tuple[str, str]]:
-    """Precedence: --key, then the environment variable, then stored keys."""
+    """Precedence: --key, then the environment variable, then stored keys, then newllm endpoint key."""
     if cli_key:
         return [("cli", cli_key.strip())]
-    env_key = os.environ.get(ENV_KEY, "").strip()
+    env_key = (os.environ.get(ENV_KEY) or os.environ.get("CODEX_API_KEY") or "").strip()
     entries = [(e["label"], e["key"]) for e in load()["keys"]]
     if env_key and not any(k == env_key for _, k in entries):
         entries.insert(0, ("env", env_key))
+    if not entries:
+        codex_key = _find_codex_endpoint_key()
+        if codex_key:
+            entries.append(("codex", codex_key))
     return entries
 
 
